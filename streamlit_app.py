@@ -5,9 +5,9 @@ import streamlit as st
 import base64
 from openai import OpenAI
 
-st.set_page_config(page_title="GPT-5-mini & Image Demo")
+st.set_page_config(page_title="GPT-5.1 & Image Demo")
 
-st.title("GPT-5-mini / gpt-image-1-mini 데모 앱")
+st.title("GPT-5.1 / gpt-image-1-mini 데모 앱")
 
 # 1. API Key 입력 (비밀번호 형식)
 api_key = st.text_input("OpenAI API Key를 입력하세요", type="password")
@@ -20,7 +20,7 @@ else:
     client = OpenAI(api_key=api_key)
 
     st.markdown("---")
-    st.header("4. GPT-5-mini 텍스트 챗봇")
+    st.header("4. GPT-5.1 텍스트 챗봇")
 
     # 3. 텍스트 질문 입력
     user_question = st.text_input("질문을 입력하세요")
@@ -30,9 +30,9 @@ else:
             st.error("질문을 입력해 주세요.")
         else:
             try:
-                # gpt-5-mini (여기서는 gpt-5.1-mini라는 이름으로 가정)
+                # gpt-5.1 모델 사용
                 completion = client.chat.completions.create(
-                    model="gpt-5.1-mini",
+                    model="gpt-5.1",
                     messages=[
                         {"role": "system", "content": "You are a helpful assistant."},
                         {"role": "user", "content": user_question},
@@ -59,7 +59,7 @@ else:
                 img = client.images.generate(
                     model="gpt-image-1-mini",
                     prompt=img_prompt,
-                    size="512x512",      # 필요하면 크기 변경 가능
+                    size="512x512",        # 필요하면 크기 변경 가능
                     n=1,
                     response_format="b64_json",
                 )
@@ -72,3 +72,4 @@ else:
 
             except Exception as e:
                 st.error(f"이미지 생성 중 에러가 발생했습니다: {e}")
+
