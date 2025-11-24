@@ -50,9 +50,17 @@ else:
             st.error("이미지 프롬프트를 입력해 주세요.")
         else:
             try:
-                # ⭐ size 수정
+                # 괄호 정상적으로 닫음
                 img = client.images.generate(
                     model="gpt-image-1-mini",
                     prompt=img_prompt,
-                    size="1024x1024",   # 지원되는 값
+                    size="1024x1024",
                     n=1
+                )
+
+                image_bytes = base64.b64decode(img.data[0].b64_json)
+                st.image(image_bytes, caption="생성된 이미지")
+
+            except Exception as e:
+                st.error(f"이미지 생성 중 에러가 발생했습니다: {e}")
+
